@@ -10,4 +10,6 @@ while True:
 	if signature < 960940 :
 		print('jump')
 		print(signature)
-		pyautogui.press('space')
+		pyautogui.keyDown("space")
+		time.sleep(0.3)
+		pyautogui.keyUp("space")
