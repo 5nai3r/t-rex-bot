@@ -4,10 +4,13 @@ from tkinter import *
 import threading
 #project code dala3
 #zone where take to screenshot to detect the cactus  
-detectionZone = (476,176, 20, 200) 
+detectionZone = (476,176, 20, 150) 
 #enable variable for the loop
 BotEnable = False 
 exitLoop = False
+
+def levelFilter(x):
+	return 255 if x > 126 else 0
 
 def checkLoop():
 	global detectionRectangle
@@ -16,13 +19,13 @@ def checkLoop():
 		if BotEnable :
 			w.itemconfig(detectionRectangle, outline="white")
 			s = pyautogui.screenshot(region=detectionZone)
-			signature = sum(list( s.convert('1').getdata()))
-			if signature < 960940 :
+			signature = sum(map(levelFilter, s.convert('L').getdata()))
+			if signature < 500135 :
 				w.itemconfig(detectionRectangle, outline="red")
 				print('jump')
 				print(signature)
 				pyautogui.keyDown("space")
-				time.sleep(0.3)
+				time.sleep(0.1)
 				pyautogui.keyUp("space")
 	return
 
@@ -32,12 +35,12 @@ x.start()
 BotWindow = Tk()
 BotWindow.wm_attributes('-alpha',0.2)
 
-w = Canvas(BotWindow, width=200, height=250)
+w = Canvas(BotWindow, width=200, height=150)
 w.pack()
-detectionRectangle = w.create_rectangle(50, 25, 20, 200, fill="blue",outline="white", width=3)
+detectionRectangle = w.create_rectangle(47, 22, 23, 103, fill="blue",outline="white", width=3)
 def click():
     global detectionZone
-    detectionZone = (BotWindow.winfo_x()+50, BotWindow.winfo_y()+25,20,200)
+    detectionZone = (BotWindow.winfo_x()+30, BotWindow.winfo_y()+25,20,100)
 
 def toggleEnable():
     global BotEnable
@@ -57,4 +60,4 @@ enbBtn.pack()
 
 BotWindow.protocol("WM_DELETE_WINDOW", onClose)
 BotWindow.wm_attributes("-topmost", 1)
-BotWindow.mainloop()
+BotWindow.mainloop()         
