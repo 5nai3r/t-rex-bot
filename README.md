@@ -1,5 +1,6 @@
 # t-rex-bot
 A python bot for the T-rex hidden game of Chrome
+![bot Demo](demo/demo.gif)
 # Requirements
 This bot require pyautogui, Use the package manager pip to install it.
 ```bash
